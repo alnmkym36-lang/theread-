@@ -55,15 +55,15 @@
       .hero-headline {
         font-family: 'Cairo', sans-serif;
         font-weight: 900;
-        line-height: 0.8;
-        letter-spacing: -0.04em;
+        line-height: 0.85; 
+        letter-spacing: -0.05em;
         text-transform: uppercase;
       }
       
       .glass-card {
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(128, 128, 128, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
       }
 
       @keyframes slideInRight {
@@ -77,13 +77,8 @@
       .animate-slide-right { animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
       .animate-slide-left { animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-      .text-stroke {
-        -webkit-text-stroke: 2px rgba(255,255,255,0.6);
-        color: transparent;
-      }
-      .text-stroke-light {
-        -webkit-text-stroke: 2px rgba(0,0,0,0.3);
-        color: transparent;
+      .text-glow {
+        text-shadow: 0 0 30px rgba(255, 0, 60, 0.3);
       }
     </style>
 
@@ -94,8 +89,8 @@
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "lucide-react": "https://esm.sh/lucide-react@0.475.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>

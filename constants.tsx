@@ -4,7 +4,7 @@ import { Product, TranslationDictionary } from './types';
 export const EXCHANGE_RATE = 13.5; // 1 SAR = 13.5 EGP (approximate)
 
 export const PRODUCTS: Product[] = [
-  // المنتجات الجديدة بخصم 15%
+  // --- Promo/Discounted Products (15% Off) ---
   {
     id: 'promo-1',
     name: { en: "Urban Stealth Jacket", ar: "جاكيت أربان ستيلث" },
@@ -31,45 +31,33 @@ export const PRODUCTS: Product[] = [
     image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80",
     category: 'men'
   },
+  
+  // --- New Men's Products ---
   {
-    id: 'promo-3',
-    name: { en: "Cyber Cargo Pants", ar: "بنطلون كارغو سايبر" },
-    price: 595,
-    originalPrice: 700,
+    id: 'm1',
+    name: { en: "Graphic Oversized Tee", ar: "تيشيرت واسع بطبعة" },
+    price: 450,
     rating: 4.8,
-    reviews: 19,
-    badge: { en: "-15% OFF", ar: "خصم %15" },
-    colors: ["زيتوني"],
-    sizes: ["30", "32", "34"],
+    reviews: 56,
+    colors: ["أبيض", "أسود"],
+    sizes: ["M", "L", "XL"],
+    image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?auto=format&fit=crop&w=800&q=80",
+    category: 'men'
+  },
+  {
+    id: 'm2',
+    name: { en: "Tactical Cargo Pants", ar: "بنطلون كارجو تكتيكال" },
+    price: 750,
+    rating: 4.7,
+    reviews: 89,
+    badge: { en: "BESTSELLER", ar: "الأكثر مبيعاً" },
+    colors: ["كاكي", "أسود"],
+    sizes: ["30", "32", "34", "36"],
     image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=800&q=80",
     category: 'men'
   },
-  {
-    id: 'promo-4',
-    name: { en: "Aesthetic Graphic Tee", ar: "تيشرت جرافيك مودرن" },
-    price: 340,
-    originalPrice: 400,
-    rating: 4.9,
-    reviews: 56,
-    badge: { en: "-15% OFF", ar: "خصم %15" },
-    colors: ["أبيض"],
-    sizes: ["S", "M", "L"],
-    image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
-    category: 'men'
-  },
-  {
-    id: 'off1',
-    name: { en: "Utility Tech Vest", ar: "فيست تيكنيكال" },
-    price: 499,
-    originalPrice: 750,
-    rating: 4.9,
-    reviews: 156,
-    badge: { en: "HOT", ar: "ساخن" },
-    colors: ["أسود"],
-    sizes: ["S", "M", "L", "XL"],
-    image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80",
-    category: 'men'
-  },
+
+  // --- Women's Collection (Updated with more items) ---
   {
     id: 'w1',
     name: { en: "Cropped Urban Jacket", ar: "جاكيت أربان قصير" },
@@ -80,7 +68,7 @@ export const PRODUCTS: Product[] = [
     badge: { en: "OFFER", ar: "عرض" },
     colors: ["بيج"],
     sizes: ["XS", "S", "M", "L"],
-    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
     category: 'women'
   },
   {
@@ -93,6 +81,29 @@ export const PRODUCTS: Product[] = [
     colors: ["أسود"],
     sizes: ["S", "M", "L"],
     image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+    category: 'women'
+  },
+  {
+    id: 'w3',
+    name: { en: "Oversized Utility Shirt", ar: "قميص يونيفورم واسع" },
+    price: 420,
+    rating: 4.8,
+    reviews: 65,
+    colors: ["رمادي"],
+    sizes: ["S", "M", "L"],
+    image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=800&q=80",
+    category: 'women'
+  },
+  {
+    id: 'w4',
+    name: { en: "Street Style Beanie", ar: "أيس كاب ستريت" },
+    price: 180,
+    rating: 4.9,
+    reviews: 210,
+    badge: { en: "TRENDING", ar: "تريند" },
+    colors: ["فوشيا"],
+    sizes: ["واحد"],
+    image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80",
     category: 'women'
   }
 ];
@@ -113,8 +124,8 @@ export const TRANSLATIONS: TranslationDictionary = {
   satisfiedCustomers: { en: "+50k Customers", ar: "+50 ألف عميل" },
   featuredProducts: { en: "Featured Products", ar: "منتجات مميزة" },
   exclusiveOffers: { en: "Exclusive Offers", ar: "عروض حصرية" },
-  newsletterTitle: { en: "Join the Club", ar: "انضم إلينا" },
-  newsletterDesc: { en: "Get the latest drops first.", ar: "كن أول من يحصل على الإصدارات." },
+  newsletterTitle: { en: "Unlock 10% Off", ar: "احصل على خصم %10" },
+  newsletterDesc: { en: "Subscribe to get your promo code and latest drops.", ar: "اشترك الآن لتحصل على كود الخصم وآخر الإصدارات." },
   subscribe: { en: "Subscribe", ar: "اشترك" },
   faq: { en: "FAQ", ar: "الأسئلة الشائعة" },
   cart: { en: "Cart", ar: "العربة" },
@@ -144,7 +155,17 @@ export const TRANSLATIONS: TranslationDictionary = {
   uniqueDesign: { en: "Unique Design", ar: "تصميم فريد" },
   uniqueDesignDesc: { en: "Streetwear that tells a story, unlike anything else.", ar: "ستريت وير يحكي قصة، لا يشبه أي شيء آخر." },
   fastSupport: { en: "24/7 Support", ar: "دعم 24/7" },
-  fastSupportDesc: { en: "Our team is here to help you anytime on WhatsApp.", ar: "فريقنا هنا لمساعدتك في أي وقت عبر الواتساب." }
+  fastSupportDesc: { en: "Our team is here to help you anytime on WhatsApp.", ar: "فريقنا هنا لمساعدتك في أي وقت عبر الواتساب." },
+  
+  // --- New Translations for Full Localization ---
+  regionalDrop: { en: "EGYPT & KSA DROP", ar: "إصدار مصر والسعودية" },
+  regionalFlash: { en: "Regional Flash Event", ar: "عروض فلاش إقليمية" },
+  hottestPicks: { en: "Hottest Picks", ar: "أفضل الاختيارات" },
+  emailPlaceholder: { en: "YOUR_EMAIL@HERE", ar: "بريدك الإلكتروني" },
+  explore: { en: "EXPLORE", ar: "اكتشف" },
+  support: { en: "SUPPORT", ar: "الدعم" },
+  contact: { en: "CONTACT", ar: "تواصل معنا" },
+  copyrightStore: { en: "© 2024 THREAD EXCLUSIVE STORE.", ar: "© 2024 متجر ثريد الحصري." },
 };
 
 export const FAQ_DATA = [
