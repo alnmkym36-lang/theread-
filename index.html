@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THREAD | ستايلك، قصتك</title>
+    <meta name="description" content="THREAD: Your Style, Your Story. High-quality streetwear for Gen Z & Millennials in Egypt and the Gulf. Shop the latest drops now." />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                light: '#f8f9fa',
+                dark: '#121212',
+                accent: '#ff003c',
+                neon: '#ccff00'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+              arabic: ['Cairo', 'Noto Sans Arabic', 'system-ui', 'sans-serif'],
+              display: ['Bebas Neue', 'cursive']
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@300;400;900&family=Bebas+Neue&family=Outfit:wght@900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brand-accent: #ff003c;
+      }
+      html {
+        scroll-behavior: smooth;
+        transition: background-color 0.3s ease;
+      }
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      .hero-headline {
+        font-family: 'Cairo', sans-serif;
+        font-weight: 900;
+        line-height: 0.8;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+      }
+      
+      .glass-card {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(128, 128, 128, 0.1);
+      }
+
+      @keyframes slideInRight {
+        from { transform: translateX(100px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideInLeft {
+        from { transform: translateX(-100px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      .animate-slide-right { animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .animate-slide-left { animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.564.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-white text-gray-900 dark:bg-black dark:text-white overflow-x-hidden transition-colors duration-300">
+    <div id="root"></div>
+  </body>
+</html>
