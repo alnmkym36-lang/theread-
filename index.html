@@ -1,11 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>THREAD | ستايلك، قصتك</title>
     <meta name="description" content="THREAD: Your Style, Your Story. High-quality streetwear for Gen Z & Millennials in Egypt and the Gulf. Shop the latest drops now." />
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,21 +31,22 @@
         }
       }
     </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@300;400;900&family=Bebas+Neue&family=Outfit:wght@900&display=swap" rel="stylesheet">
+    
     <style>
       :root {
         --brand-accent: #ff003c;
       }
       html {
         scroll-behavior: smooth;
-        transition: background-color 0.3s ease;
       }
       body {
-        transition: background-color 0.3s ease, color 0.3s ease;
         -webkit-font-smoothing: antialiased;
+        transition: background-color 0.3s ease;
       }
       
       .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -74,21 +76,32 @@
       }
       .animate-slide-right { animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
       .animate-slide-left { animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+      .text-stroke {
+        -webkit-text-stroke: 2px rgba(255,255,255,0.6);
+        color: transparent;
+      }
+      .text-stroke-light {
+        -webkit-text-stroke: 2px rgba(0,0,0,0.3);
+        color: transparent;
+      }
     </style>
-  <script type="importmap">
+
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@19.0.0",
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "lucide-react": "https://esm.sh/lucide-react@0.475.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
   }
 }
 </script>
-</head>
-  <body class="bg-white text-gray-900 dark:bg-black dark:text-white overflow-x-hidden transition-colors duration-300">
+  </head>
+  <body class="bg-white text-gray-900 dark:bg-brand-dark dark:text-white overflow-x-hidden">
     <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
