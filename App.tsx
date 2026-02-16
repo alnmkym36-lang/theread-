@@ -72,7 +72,7 @@ const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: string; chi
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 dark:bg-black/95 backdrop-blur-md" onClick={onClose} />
-      <div className="relative bg-white dark:bg-brand-dark w-full max-w-lg rounded-[3rem] p-10 animate-in zoom-in-95 duration-300 border border-black/5 dark:border-white/10 shadow-2xl">
+      <div className="relative bg-white dark:bg-brand-dark dark:glass-card w-full max-w-lg rounded-[3rem] p-10 animate-in zoom-in-95 duration-300 border border-black/5 dark:border-white/5 shadow-2xl">
         <div className="flex justify-between items-center mb-8">
           <h3 className="text-3xl font-black italic uppercase tracking-tighter text-brand-accent">{title}</h3>
           <button onClick={onClose} className="p-2 hover:bg-black/10 dark:hover:bg-white/10 rounded-full transition-colors">
@@ -102,7 +102,7 @@ const ProductCard: React.FC<{ product: Product; onAddToCart: (p: Product, size: 
   const currencyLabel = t(region === 'EG' ? 'egp' : 'sar');
 
   return (
-    <div className="group relative bg-white dark:bg-white/5 rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-brand-accent/5 h-full flex flex-col border border-black/5 dark:border-white/5 shadow-sm">
+    <div className="group relative bg-white dark:bg-white/5 dark:glass-card rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-brand-accent/5 h-full flex flex-col border border-black/5 dark:border-transparent shadow-sm">
       <div className="relative aspect-[3/4] overflow-hidden">
         <img 
           src={product.image} 
@@ -335,15 +335,15 @@ const App: React.FC = () => {
               
               {/* Tools on Left */}
               <div className="flex items-center gap-4">
-                 <button onClick={() => setIsCartOpen(true)} className={`p-3 rounded-xl group relative transition-all ${isScrolled ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white' : 'glass-card text-black dark:text-white border-black/10 dark:border-white/10'}`}>
+                 <button onClick={() => setIsCartOpen(true)} className={`p-3 rounded-xl group relative transition-all ${isScrolled ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white' : 'glass-card border-black/10 dark:border-white/5 text-black dark:text-white'}`}>
                    <ShoppingBag className="w-5 h-5"/>
                    {cartItems.length > 0 && (
                      <span className="absolute -top-1 -right-1 bg-brand-accent text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">{cartItems.length}</span>
                    )}
                  </button>
-                 <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className={`p-3 rounded-xl text-[10px] font-black uppercase transition-all ${isScrolled ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white' : 'glass-card text-black dark:text-white border-black/10 dark:border-white/10'}`}>{lang === 'ar' ? 'EN' : 'AR'}</button>
-                 <button onClick={toggleTheme} className={`p-3 rounded-xl transition-all ${isScrolled ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white' : 'glass-card text-black dark:text-white border-black/10 dark:border-white/10'}`}>{theme === 'dark' ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}</button>
-                 <div className={`flex rounded-xl p-1 transition-all ${isScrolled ? 'bg-black/5 dark:bg-white/10' : 'glass-card bg-white/10 border-black/10 dark:border-white/10'}`}>
+                 <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className={`p-3 rounded-xl text-[10px] font-black uppercase transition-all ${isScrolled ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white' : 'glass-card border-black/10 dark:border-white/5 text-black dark:text-white'}`}>{lang === 'ar' ? 'EN' : 'AR'}</button>
+                 <button onClick={toggleTheme} className={`p-3 rounded-xl transition-all ${isScrolled ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white' : 'glass-card border-black/10 dark:border-white/5 text-black dark:text-white'}`}>{theme === 'dark' ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}</button>
+                 <div className={`flex rounded-xl p-1 transition-all ${isScrolled ? 'bg-black/5 dark:bg-white/10' : 'glass-card bg-white/10 border-black/10 dark:border-white/5'}`}>
                     <button onClick={() => setRegion('SA')} className={`px-2 py-1.5 rounded-lg text-[8px] font-black transition-colors ${region === 'SA' ? 'bg-brand-accent text-white' : (isScrolled ? 'text-gray-400' : 'text-gray-400 dark:text-gray-300')}`}>SA</button>
                     <button onClick={() => setRegion('EG')} className={`px-2 py-1.5 rounded-lg text-[8px] font-black transition-colors ${region === 'EG' ? 'bg-brand-accent text-white' : (isScrolled ? 'text-gray-400' : 'text-gray-400 dark:text-gray-300')}`}>EG</button>
                  </div>
@@ -366,8 +366,8 @@ const App: React.FC = () => {
           {/* Hero Section */}
           <section className="relative min-h-screen flex items-center overflow-hidden">
             <div className="absolute inset-0 z-0">
-              <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=2000&q=80" className="w-full h-full object-cover filter grayscale transition-all duration-700 brightness-[0.9] dark:brightness-[0.4]" />
-              <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-transparent to-white/95 dark:from-brand-dark/95 dark:to-brand-dark/95 transition-all duration-700"></div>
+              <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=2000&q=80" className="w-full h-full object-cover filter grayscale transition-all duration-700 brightness-[0.9] dark:brightness-[0.3]" />
+              <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-transparent to-white/95 dark:from-black/95 dark:via-transparent dark:to-black/95 transition-all duration-700"></div>
             </div>
 
             <div className="container mx-auto px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 pt-20">
@@ -422,14 +422,14 @@ const App: React.FC = () => {
                 <div className="flex gap-3">
                   <button 
                     onClick={() => scrollOffers('left')} 
-                    className="p-3 rounded-full bg-white border border-black/5 shadow-sm hover:bg-brand-accent hover:text-white transition-all group dark:bg-white/5 dark:border-white/10"
+                    className="p-3 rounded-full bg-white border border-black/5 shadow-sm hover:bg-brand-accent hover:text-white transition-all group dark:bg-white/5 dark:border-white/10 dark:glass-card"
                     aria-label="Scroll Left"
                   >
                     <ArrowLeft className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" />
                   </button>
                   <button 
                     onClick={() => scrollOffers('right')} 
-                    className="p-3 rounded-full bg-white border border-black/5 shadow-sm hover:bg-brand-accent hover:text-white transition-all group dark:bg-white/5 dark:border-white/10"
+                    className="p-3 rounded-full bg-white border border-black/5 shadow-sm hover:bg-brand-accent hover:text-white transition-all group dark:bg-white/5 dark:border-white/10 dark:glass-card"
                     aria-label="Scroll Right"
                   >
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
@@ -482,7 +482,7 @@ const App: React.FC = () => {
                 { icon: Palette, title: t('uniqueDesign'), desc: t('uniqueDesignDesc') },
                 { icon: MessageSquare, title: t('fastSupport'), desc: t('fastSupportDesc') }
               ].map((feature, i) => (
-                <div key={feature.title} className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/10 rounded-[2.5rem] p-10 text-center hover:border-brand-accent transition-all group">
+                <div key={feature.title} className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/10 dark:glass-card rounded-[2.5rem] p-10 text-center hover:border-brand-accent transition-all group">
                   <div className="w-20 h-20 bg-brand-accent text-white rounded-full flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform shadow-xl">
                     <feature.icon className="w-10 h-10" />
                   </div>
@@ -503,7 +503,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="flex gap-3">
                   {['all', 'men', 'women'].map((cat: any) => (
-                    <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${activeCategory === cat ? 'bg-brand-accent text-white shadow-xl' : 'bg-white border border-gray-100 text-gray-400 hover:text-black dark:bg-white/5 dark:border-transparent dark:hover:text-white'}`}>
+                    <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${activeCategory === cat ? 'bg-brand-accent text-white shadow-xl' : 'bg-white border border-gray-100 text-gray-400 hover:text-black dark:bg-white/5 dark:glass-card dark:border-transparent dark:hover:text-white'}`}>
                       {t(cat)}
                     </button>
                   ))}
@@ -520,7 +520,7 @@ const App: React.FC = () => {
             <h2 className="hero-headline text-5xl lg:text-7xl text-center mb-16 text-black dark:text-white uppercase">{t('faq')}</h2>
             <div className="grid gap-4">
               {FAQ_DATA.map((faq, i) => (
-                <div key={i} className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/5 rounded-2xl p-8 hover:border-brand-accent/30 transition-all text-start">
+                <div key={i} className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-2xl p-8 hover:border-brand-accent/30 transition-all text-start">
                   <h3 className="text-2xl font-black italic uppercase mb-4 text-brand-accent">{faq.q[lang]}</h3>
                   <p className="text-lg font-bold text-gray-500 dark:text-white/40 leading-relaxed uppercase tracking-tighter">{faq.a[lang]}</p>
                 </div>
@@ -530,7 +530,7 @@ const App: React.FC = () => {
 
           {/* Newsletter */}
           <section id="newsletter" className="py-24 container mx-auto px-8 text-center">
-            <div className="relative bg-white border border-black/5 shadow-xl dark:bg-white/5 dark:border-white/5 rounded-[4rem] p-12 lg:p-20 overflow-hidden">
+            <div className="relative bg-white border border-black/5 shadow-xl dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[4rem] p-12 lg:p-20 overflow-hidden">
               <div className="relative z-10 max-w-3xl mx-auto">
                 <h2 className="hero-headline text-5xl lg:text-7xl text-black dark:text-white mb-8">{t('newsletterTitle')}</h2>
                 <p className="text-xl font-black uppercase italic tracking-tighter text-gray-500 dark:text-white/50 mb-12">{t('newsletterDesc')}</p>
