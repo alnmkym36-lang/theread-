@@ -405,9 +405,9 @@ const App: React.FC = () => {
 
               <div className="order-1 lg:order-2 text-center lg:text-end animate-slide-right">
                 <span className="inline-block px-6 py-2 bg-brand-accent text-white text-[10px] font-black uppercase tracking-[0.3em] mb-10 rounded-full rotate-3 shadow-2xl">Egypt & KSA Drop</span>
-                <h1 className="hero-headline text-[13vw] lg:text-[11rem] leading-[0.75] lg:leading-[0.7] tracking-tighter text-black dark:text-white">
+                <h1 className="hero-headline text-[15vw] lg:text-[14rem] text-black dark:text-white">
                   {lang === 'ar' ? 'ستايلك،' : 'YOUR'} <br />
-                  <span>{lang === 'ar' ? 'قصتك' : 'STORY'}</span>
+                  <span className="text-stroke-light dark:text-stroke">{lang === 'ar' ? 'قصتك' : 'STORY'}</span>
                 </h1>
                 <p className="mt-8 text-gray-500 dark:text-white/40 text-lg font-black max-w-md lg:ms-auto uppercase italic tracking-tighter leading-tight">
                   {t('brandBio')}
