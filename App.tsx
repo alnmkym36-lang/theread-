@@ -366,8 +366,8 @@ const App: React.FC = () => {
           {/* Hero Section */}
           <section className="relative min-h-screen flex items-center overflow-hidden">
             <div className="absolute inset-0 z-0">
-              <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=2000&q=80" className="w-full h-full object-cover filter grayscale transition-all duration-700 brightness-[0.9] dark:brightness-[0.3]" />
-              <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-transparent to-white/95 dark:from-black/95 dark:to-black/95 transition-all duration-700"></div>
+              <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=2000&q=80" className="w-full h-full object-cover filter grayscale transition-all duration-700 brightness-[0.9] dark:brightness-[0.4]" />
+              <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-transparent to-white/95 dark:from-brand-dark/95 dark:to-brand-dark/95 transition-all duration-700"></div>
             </div>
 
             <div className="container mx-auto px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 pt-20">
