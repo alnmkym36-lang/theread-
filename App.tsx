@@ -32,7 +32,8 @@ import {
   Award, 
   Palette, 
   MessageSquare, 
-  Baby 
+  Baby,
+  Ruler
 } from 'lucide-react';
 import { 
   Language, 
@@ -79,7 +80,7 @@ const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: string; chi
             <X className="w-8 h-8 text-black dark:text-white" />
           </button>
         </div>
-        <div className="text-gray-700 dark:text-white/60 font-bold text-lg leading-relaxed mb-10 uppercase tracking-tighter italic text-start">
+        <div className="text-gray-700 dark:text-white/60 font-bold text-lg leading-relaxed mb-10 uppercase tracking-tighter italic text-start whitespace-pre-line">
           {children}
         </div>
         <button onClick={onClose} className="w-full py-5 bg-black dark:bg-white text-white dark:text-black rounded-2xl font-black text-xl hover:bg-brand-accent hover:text-white transition-all uppercase italic">
@@ -528,6 +529,60 @@ const App: React.FC = () => {
             </div>
           </section>
 
+          {/* Size Guide Section */}
+          <section id="size-guide" className="py-24 container mx-auto px-8">
+            <div className="text-center mb-16">
+              <h2 className="hero-headline text-5xl lg:text-7xl text-black dark:text-white mb-4">{t('sizeGuide')}</h2>
+              <p className="text-gray-500 dark:text-white/60 font-black uppercase tracking-widest">{t('findYourFit')}</p>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Men's Table */}
+              <div className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[2.5rem] p-10">
+                  <h3 className="text-3xl font-black italic uppercase mb-8 text-black dark:text-white text-center">{t('menSizes')}</h3>
+                  <div className="overflow-x-auto">
+                      <table className="w-full text-center">
+                          <thead>
+                              <tr className="border-b-2 border-black/5 dark:border-white/10">
+                                  <th className="py-4 font-black uppercase text-brand-accent">{t('size')}</th>
+                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('chest')} (cm)</th>
+                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('length')} (cm)</th>
+                              </tr>
+                          </thead>
+                          <tbody className="font-bold text-black dark:text-white">
+                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">S</td><td className="py-4">91-96</td><td className="py-4">70</td></tr>
+                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">M</td><td className="py-4">96-101</td><td className="py-4">72</td></tr>
+                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">L</td><td className="py-4">101-106</td><td className="py-4">74</td></tr>
+                              <tr><td className="py-4">XL</td><td className="py-4">106-111</td><td className="py-4">76</td></tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+
+              {/* Women's Table */}
+              <div className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[2.5rem] p-10">
+                  <h3 className="text-3xl font-black italic uppercase mb-8 text-black dark:text-white text-center">{t('womenSizes')}</h3>
+                  <div className="overflow-x-auto">
+                      <table className="w-full text-center">
+                          <thead>
+                              <tr className="border-b-2 border-black/5 dark:border-white/10">
+                                  <th className="py-4 font-black uppercase text-brand-accent">{t('size')}</th>
+                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('chest')} (cm)</th>
+                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('waist')} (cm)</th>
+                              </tr>
+                          </thead>
+                          <tbody className="font-bold text-black dark:text-white">
+                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">XS</td><td className="py-4">76-81</td><td className="py-4">60-64</td></tr>
+                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">S</td><td className="py-4">81-86</td><td className="py-4">64-69</td></tr>
+                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">M</td><td className="py-4">86-91</td><td className="py-4">69-74</td></tr>
+                              <tr><td className="py-4">L</td><td className="py-4">91-96</td><td className="py-4">74-79</td></tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+            </div>
+          </section>
+
           {/* Newsletter */}
           <section id="newsletter" className="py-24 container mx-auto px-8 text-center">
             <div className="relative bg-white border border-black/5 shadow-xl dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[4rem] p-12 lg:p-20 overflow-hidden">
@@ -571,6 +626,7 @@ const App: React.FC = () => {
                     <li><button onClick={() => setPolicyModal('terms')} className="hover:text-white transition-colors uppercase">{t('terms')}</button></li>
                     <li><button onClick={() => setPolicyModal('privacy')} className="hover:text-white transition-colors uppercase">{t('privacy')}</button></li>
                     <li><button onClick={() => setPolicyModal('exchange')} className="hover:text-white transition-colors uppercase">{t('exchangePolicy')}</button></li>
+                    <li><button onClick={() => setPolicyModal('sizeGuide')} className="hover:text-white transition-colors uppercase">{t('sizeGuide')}</button></li>
                   </ul>
                 </div>
                 <div>

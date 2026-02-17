@@ -166,6 +166,16 @@ export const TRANSLATIONS: TranslationDictionary = {
   support: { en: "SUPPORT", ar: "الدعم" },
   contact: { en: "CONTACT", ar: "تواصل معنا" },
   copyrightStore: { en: "© 2024 THREAD EXCLUSIVE STORE.", ar: "© 2024 متجر ثريد الحصري." },
+  sizeGuide: { en: "Size Guide", ar: "دليل المقاسات" },
+  
+  // --- Size Guide Section Keys ---
+  findYourFit: { en: "Find Your Perfect Fit", ar: "اكتشف مقاسك المثالي" },
+  size: { en: "Size", ar: "المقاس" },
+  chest: { en: "Chest", ar: "الصدر" },
+  length: { en: "Length", ar: "الطول" },
+  waist: { en: "Waist", ar: "الوسط" },
+  menSizes: { en: "Men's Sizes", ar: "مقاسات الرجال" },
+  womenSizes: { en: "Women's Sizes", ar: "مقاسات النساء" },
 };
 
 export const FAQ_DATA = [
@@ -203,5 +213,10 @@ export const POLICIES: Record<string, { en: string; ar: string; title: { en: str
     title: { en: "Exchange", ar: "الاستبدال" },
     en: "Free exchange for defective items. Return shipping may apply for other reasons depending on your country.",
     ar: "تبديل مجاني للمنتجات المعيبة. قد يتم تطبيق رسوم شحن الإرجاع لأسباب أخرى حسب بلدك."
+  },
+  sizeGuide: {
+    title: { en: "Size Guide", ar: "دليل المقاسات" },
+    en: "MEN'S TOPS (Chest):\nS: 91-96 cm\nM: 96-101 cm\nL: 101-106 cm\nXL: 106-111 cm\n\nWOMEN'S TOPS (Bust):\nXS: 76-81 cm\nS: 81-86 cm\nM: 86-91 cm\nL: 91-96 cm",
+    ar: "ملابس الرجال (محيط الصدر):\nS: 91-96 سم\nM: 96-101 سم\nL: 101-106 سم\nXL: 106-111 سم\n\nملابس النساء (محيط الصدر):\nXS: 76-81 سم\nS: 81-86 سم\nM: 86-91 سم\nL: 91-96 سم"
   }
 };
