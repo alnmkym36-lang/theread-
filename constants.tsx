@@ -105,6 +105,41 @@ export const PRODUCTS: Product[] = [
     sizes: ["واحد"],
     image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80",
     category: 'women'
+  },
+
+  // --- Accessories Collection ---
+  {
+    id: 'a1',
+    name: { en: "Minimalist Silver Chain", ar: "سلسلة فضة مينياليست" },
+    price: 350,
+    rating: 4.8,
+    reviews: 120,
+    colors: ["فضي"],
+    sizes: ["One Size"],
+    image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=800&q=80",
+    category: 'accessories'
+  },
+  {
+    id: 'a2',
+    name: { en: "Urban Crossbody Bag", ar: "شنطة كروس أربان" },
+    price: 550,
+    rating: 4.9,
+    reviews: 85,
+    colors: ["أسود"],
+    sizes: ["One Size"],
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80",
+    category: 'accessories'
+  },
+  {
+    id: 'a3',
+    name: { en: "Retro Future Sunglasses", ar: "نظارة شمسية ريترو" },
+    price: 400,
+    rating: 4.7,
+    reviews: 45,
+    colors: ["أسود"],
+    sizes: ["One Size"],
+    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+    category: 'accessories'
   }
 ];
 
@@ -114,6 +149,7 @@ export const TRANSLATIONS: TranslationDictionary = {
   getDiscount: { en: "Get 15% Off", ar: "احصل على خصم %15" },
   men: { en: "Men", ar: "رجال" },
   women: { en: "Women", ar: "نساء" },
+  accessories: { en: "Accessories", ar: "إكسسوارات" },
   all: { en: "All", ar: "الكل" },
   offers: { en: "Offers", ar: "العروض" },
   featured: { en: "Featured", ar: "المميزة" },
@@ -176,6 +212,16 @@ export const TRANSLATIONS: TranslationDictionary = {
   waist: { en: "Waist", ar: "الوسط" },
   menSizes: { en: "Men's Sizes", ar: "مقاسات الرجال" },
   womenSizes: { en: "Women's Sizes", ar: "مقاسات النساء" },
+
+  // --- Checkout Form Keys ---
+  checkoutForm: { en: "Checkout", ar: "إتمام الطلب" },
+  fullName: { en: "Full Name", ar: "الاسم بالكامل" },
+  phoneNumber: { en: "Phone Number", ar: "رقم الهاتف" },
+  governorate: { en: "Governorate / City", ar: "المحافظة / المدينة" },
+  addressDetails: { en: "Detailed Address", ar: "العنوان بالتفصيل" },
+  confirmOrder: { en: "Confirm Order", ar: "تأكيد الطلب" },
+  backToCart: { en: "Back to Cart", ar: "العودة للعربة" },
+  fillAllFields: { en: "Please fill all fields", ar: "يرجى ملء جميع البيانات" },
 };
 
 export const FAQ_DATA = [

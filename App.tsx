@@ -169,6 +169,8 @@ const CartDrawer: React.FC<{
   onRemove: (id: string, size: string, color: string) => void 
 }> = ({ isOpen, onClose, items, onUpdate, onRemove }) => {
   const { lang, t, region } = useContext(LanguageContext);
+  const [isCheckout, setIsCheckout] = useState(false);
+  const [formData, setFormData] = useState({ name: '', phone: '', city: '', address: '' });
   
   const convertPrice = (price: number) => {
     if (region === 'EG') return price;
@@ -178,56 +180,139 @@ const CartDrawer: React.FC<{
   const currencyLabel = t(region === 'EG' ? 'egp' : 'sar');
   const total = items.reduce((acc, item) => acc + convertPrice(item.price) * item.quantity, 0);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleCheckout = () => {
+    if (!formData.name || !formData.phone || !formData.city || !formData.address) {
+      alert(t('fillAllFields'));
+      return;
+    }
+
     const itemStrings = items.map(item => 
       `- ${item.name[lang]} (${item.selectedSize}) x${item.quantity}: ${convertPrice(item.price) * item.quantity} ${currencyLabel}`
     ).join('\n');
-    const summary = encodeURIComponent(`طلب جديد (${region}):\n\n${itemStrings}\n\nالإجمالي: ${total} ${currencyLabel}`);
+    
+    const customerDetails = `
+بيانات العميل:
+الاسم: ${formData.name}
+رقم الهاتف: ${formData.phone}
+المحافظة/المدينة: ${formData.city}
+العنوان: ${formData.address}
+    `.trim();
+
+    const summary = encodeURIComponent(`طلب جديد (${region}):\n\n${customerDetails}\n\n----------------\n\nالمنتجات:\n${itemStrings}\n\nالإجمالي: ${total} ${currencyLabel}`);
     window.open(`https://wa.me/201119241396?text=${summary}`, '_blank');
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+        // Reset view when closed
+        setTimeout(() => setIsCheckout(false), 300);
+    }
+  }, [isOpen]);
 
   return (
     <div className={`fixed inset-0 z-[120] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
       <div className="absolute inset-0 bg-black/40 dark:bg-black/80 backdrop-blur-xl" onClick={onClose} />
       <div className={`absolute top-0 bottom-0 ${lang === 'ar' ? 'left-0' : 'right-0'} w-full max-w-md bg-white dark:bg-brand-dark border-x border-black/5 dark:border-white/5 shadow-2xl transition-transform duration-500 transform ${isOpen ? 'translate-x-0' : (lang === 'ar' ? '-translate-x-full' : 'translate-x-full')} flex flex-col`}>
         <div className="p-8 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
-          <h2 className="text-3xl font-black italic uppercase tracking-tighter text-black dark:text-white">{t('cart')}</h2>
+          <div className="flex items-center gap-3">
+             {isCheckout && (
+                <button onClick={() => setIsCheckout(false)} className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors">
+                    <ArrowLeft className={`w-5 h-5 text-black dark:text-white ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                </button>
+             )}
+             <h2 className="text-3xl font-black italic uppercase tracking-tighter text-black dark:text-white">
+                {isCheckout ? t('checkoutForm') : t('cart')}
+             </h2>
+          </div>
           <button onClick={onClose} className="p-3 hover:bg-black/5 dark:hover:bg-white/5 rounded-full">
             <X className="w-6 h-6 text-black dark:text-white" />
           </button>
         </div>
 
+        {/* Content Area */}
         <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
-          {items.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-center opacity-20">
-              <ShoppingBag className="w-24 h-24 mb-6 stroke-1 text-black dark:text-white" />
-              <p className="text-xl font-black italic uppercase text-black dark:text-white">{t('continueShopping')}</p>
-            </div>
-          ) : (
-            items.map((item, idx) => (
-              <div key={idx} className="flex gap-6 group animate-in slide-in-from-bottom-4">
-                <div className="relative w-24 h-32 flex-shrink-0 overflow-hidden rounded-2xl bg-black/5 dark:bg-white/5">
-                  <img src={item.image} className="w-full h-full object-cover filter grayscale" />
+          {!isCheckout ? (
+            // Cart Items View
+            items.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center text-center opacity-20">
+                  <ShoppingBag className="w-24 h-24 mb-6 stroke-1 text-black dark:text-white" />
+                  <p className="text-xl font-black italic uppercase text-black dark:text-white">{t('continueShopping')}</p>
                 </div>
-                <div className="flex-1 flex flex-col justify-between py-1">
-                  <div>
-                    <h4 className="font-black text-sm italic uppercase mb-1 text-black dark:text-white">{item.name[lang]}</h4>
-                    <p className="text-[10px] text-gray-400 dark:text-white/40 font-black uppercase tracking-widest">{item.selectedSize}</p>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-5 bg-black/5 dark:bg-white/5 px-4 py-2 rounded-xl">
-                      <button onClick={() => onUpdate(item.id, item.selectedSize, item.selectedColor, -1)} className="text-black dark:text-white hover:text-brand-accent transition-colors"><Minus className="w-3.5 h-3.5" /></button>
-                      <span className="font-black text-sm text-black dark:text-white">{item.quantity}</span>
-                      <button onClick={() => onUpdate(item.id, item.selectedSize, item.selectedColor, 1)} className="text-black dark:text-white hover:text-brand-accent transition-colors"><Plus className="w-3.5 h-3.5" /></button>
+              ) : (
+                items.map((item, idx) => (
+                  <div key={idx} className="flex gap-6 group animate-in slide-in-from-bottom-4">
+                    <div className="relative w-24 h-32 flex-shrink-0 overflow-hidden rounded-2xl bg-black/5 dark:bg-white/5">
+                      <img src={item.image} className="w-full h-full object-cover filter grayscale" />
                     </div>
-                    <p className="font-black text-brand-accent">{convertPrice(item.price) * item.quantity} {currencyLabel}</p>
+                    <div className="flex-1 flex flex-col justify-between py-1">
+                      <div>
+                        <h4 className="font-black text-sm italic uppercase mb-1 text-black dark:text-white">{item.name[lang]}</h4>
+                        <p className="text-[10px] text-gray-400 dark:text-white/40 font-black uppercase tracking-widest">{item.selectedSize}</p>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-5 bg-black/5 dark:bg-white/5 px-4 py-2 rounded-xl">
+                          <button onClick={() => onUpdate(item.id, item.selectedSize, item.selectedColor, -1)} className="text-black dark:text-white hover:text-brand-accent transition-colors"><Minus className="w-3.5 h-3.5" /></button>
+                          <span className="font-black text-sm text-black dark:text-white">{item.quantity}</span>
+                          <button onClick={() => onUpdate(item.id, item.selectedSize, item.selectedColor, 1)} className="text-black dark:text-white hover:text-brand-accent transition-colors"><Plus className="w-3.5 h-3.5" /></button>
+                        </div>
+                        <p className="font-black text-brand-accent">{convertPrice(item.price) * item.quantity} {currencyLabel}</p>
+                      </div>
+                      <button onClick={() => onRemove(item.id, item.selectedSize, item.selectedColor)} className="text-[10px] font-black uppercase tracking-tighter text-gray-300 dark:text-white/20 hover:text-red-500 transition-colors flex items-center gap-1 mt-2">
+                        <Trash2 className="w-3 h-3" /> {t('remove')}
+                      </button>
+                    </div>
                   </div>
-                  <button onClick={() => onRemove(item.id, item.selectedSize, item.selectedColor)} className="text-[10px] font-black uppercase tracking-tighter text-gray-300 dark:text-white/20 hover:text-red-500 transition-colors flex items-center gap-1 mt-2">
-                    <Trash2 className="w-3 h-3" /> {t('remove')}
-                  </button>
+                ))
+              )
+          ) : (
+             // Checkout Form View
+             <div className="space-y-6 animate-in slide-in-from-right-4">
+                <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-white/50 ps-2">{t('fullName')}</label>
+                    <input 
+                        type="text" 
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className="w-full bg-gray-50 border-2 border-gray-100 dark:bg-white/5 dark:border-white/10 rounded-2xl px-5 py-4 font-bold text-black dark:text-white focus:outline-none focus:border-brand-accent transition-colors"
+                    />
                 </div>
-              </div>
-            ))
+                <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-white/50 ps-2">{t('phoneNumber')}</label>
+                    <input 
+                        type="tel" 
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full bg-gray-50 border-2 border-gray-100 dark:bg-white/5 dark:border-white/10 rounded-2xl px-5 py-4 font-bold text-black dark:text-white focus:outline-none focus:border-brand-accent transition-colors"
+                        dir="ltr"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-white/50 ps-2">{t('governorate')}</label>
+                    <input 
+                        type="text" 
+                        name="city"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className="w-full bg-gray-50 border-2 border-gray-100 dark:bg-white/5 dark:border-white/10 rounded-2xl px-5 py-4 font-bold text-black dark:text-white focus:outline-none focus:border-brand-accent transition-colors"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-white/50 ps-2">{t('addressDetails')}</label>
+                    <textarea 
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        rows={3}
+                        className="w-full bg-gray-50 border-2 border-gray-100 dark:bg-white/5 dark:border-white/10 rounded-2xl px-5 py-4 font-bold text-black dark:text-white focus:outline-none focus:border-brand-accent transition-colors resize-none"
+                    />
+                </div>
+             </div>
           )}
         </div>
 
@@ -237,9 +322,16 @@ const CartDrawer: React.FC<{
               <span className="text-gray-400 dark:text-white/40 font-black uppercase text-xs tracking-widest">{t('total')}</span>
               <span className="text-4xl font-black italic text-black dark:text-white">{total} <span className="text-sm font-normal">{currencyLabel}</span></span>
             </div>
-            <button onClick={handleCheckout} className="w-full bg-brand-accent text-white py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-4 hover:scale-[1.02] transition-transform shadow-[0_20px_40px_-10px_rgba(255,0,61,0.4)]">
-              <Send className="w-6 h-6" /> {t('checkoutViaWhatsapp')}
-            </button>
+            
+            {!isCheckout ? (
+                <button onClick={() => setIsCheckout(true)} className="w-full bg-black dark:bg-white text-white dark:text-black py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-4 hover:scale-[1.02] transition-transform">
+                    {t('checkoutViaWhatsapp')} <ArrowRight className={`w-5 h-5 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                </button>
+            ) : (
+                <button onClick={handleCheckout} className="w-full bg-brand-accent text-white py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-4 hover:scale-[1.02] transition-transform shadow-[0_20px_40px_-10px_rgba(255,0,61,0.4)]">
+                    <Send className="w-6 h-6" /> {t('confirmOrder')}
+                </button>
+            )}
           </div>
         )}
       </div>
@@ -256,7 +348,7 @@ const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<'men' | 'women' | 'all'>('all');
+  const [activeCategory, setActiveCategory] = useState<'men' | 'women' | 'all' | 'accessories'>('all');
   const [policyModal, setPolicyModal] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   
@@ -322,6 +414,7 @@ const App: React.FC = () => {
   const categoryImages = {
     men: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80',
     women: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80',
+    accessories: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=80',
     all: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&q=80'
   };
 
@@ -352,7 +445,7 @@ const App: React.FC = () => {
 
               {/* Navigation in Center */}
               <nav className="hidden lg:flex items-center gap-10">
-                {['offers', 'women', 'men'].map(cat => (
+                {['offers', 'women', 'men', 'accessories'].map(cat => (
                   <button key={cat} onClick={() => { cat === 'offers' ? scrollToSection('offers') : scrollToSection('categories'); if (cat !== 'offers') setActiveCategory(cat as any); }} className={`text-xs font-black uppercase tracking-widest transition-all ${activeCategory === cat ? 'text-brand-accent border-b-2 border-brand-accent' : 'text-black/70 hover:text-brand-accent dark:text-white/80'}`}>
                     {t(cat)}
                   </button>
@@ -415,7 +508,6 @@ const App: React.FC = () => {
             <div className="container mx-auto px-8">
               <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-6">
                 <div className="text-start max-w-2xl">
-                  <span className="text-brand-accent font-black uppercase tracking-[0.5em] text-[10px] mb-2 block animate-pulse">{t('regionalFlash')}</span>
                   <h2 className="hero-headline text-4xl lg:text-6xl text-black dark:text-white uppercase leading-none">{t('exclusiveOffers')}</h2>
                 </div>
                 
@@ -462,7 +554,7 @@ const App: React.FC = () => {
               <div className="absolute inset-0 z-10 flex flex-col justify-end p-12 items-center text-center">
                 <h2 className="hero-headline text-5xl lg:text-7xl text-white mb-8">{t(activeCategory === 'all' ? 'featured' : activeCategory)}</h2>
                 <div className="flex flex-wrap justify-center gap-4 mb-8">
-                  {['men', 'women'].map((cat: any) => (
+                  {['men', 'women', 'accessories'].map((cat: any) => (
                     <button key={cat} onClick={() => { setActiveCategory(cat); scrollToSection('featured'); }} className={`px-8 py-4 rounded-2xl font-black text-xl uppercase italic tracking-tighter transition-all ${activeCategory === cat ? 'bg-brand-accent text-white scale-105 shadow-xl' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>
                       {t(cat)}
                     </button>
@@ -503,7 +595,7 @@ const App: React.FC = () => {
                   <h2 className="hero-headline text-5xl lg:text-7xl text-black dark:text-white uppercase">{t('featuredProducts')}</h2>
                 </div>
                 <div className="flex gap-3">
-                  {['all', 'men', 'women'].map((cat: any) => (
+                  {['all', 'men', 'women', 'accessories'].map((cat: any) => (
                     <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${activeCategory === cat ? 'bg-brand-accent text-white shadow-xl' : 'bg-white border border-gray-100 text-gray-400 hover:text-black dark:bg-white/5 dark:glass-card dark:border-transparent dark:hover:text-white'}`}>
                       {t(cat)}
                     </button>
@@ -617,6 +709,7 @@ const App: React.FC = () => {
                   <ul className="space-y-4 text-xl font-black italic uppercase text-white/60">
                     <li><button onClick={() => { setActiveCategory('men'); scrollToSection('categories'); }} className="hover:text-brand-accent transition-colors">{t('men')}</button></li>
                     <li><button onClick={() => { setActiveCategory('women'); scrollToSection('categories'); }} className="hover:text-brand-accent transition-colors">{t('women')}</button></li>
+                    <li><button onClick={() => { setActiveCategory('accessories'); scrollToSection('categories'); }} className="hover:text-brand-accent transition-colors">{t('accessories')}</button></li>
                     <li><button onClick={() => scrollToSection('offers')} className="hover:text-brand-accent transition-colors">{t('offers')}</button></li>
                   </ul>
                 </div>

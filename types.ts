@@ -14,7 +14,7 @@ export interface Product {
   colors: string[];
   sizes: string[];
   image: string;
-  category: 'men' | 'women';
+  category: 'men' | 'women' | 'accessories';
   description?: { en: string; ar: string };
 }
 
