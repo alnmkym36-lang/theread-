@@ -85,7 +85,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'w3',
-    name: { en: "Oversized Utility Shirt", ar: "قميص يونيفورم واسع" },
+    name: { en: "Oversized Utility Shirt", ar: "تيشيرت يونيفورم واسع" },
     price: 420,
     rating: 4.8,
     reviews: 65,
@@ -222,6 +222,11 @@ export const TRANSLATIONS: TranslationDictionary = {
   confirmOrder: { en: "Confirm Order", ar: "تأكيد الطلب" },
   backToCart: { en: "Back to Cart", ar: "العودة للعربة" },
   fillAllFields: { en: "Please fill all fields", ar: "يرجى ملء جميع البيانات" },
+  
+  // --- Shipping ---
+  shipping: { en: "Shipping", ar: "الشحن" },
+  free: { en: "Free", ar: "مجاني" },
+  subtotal: { en: "Subtotal", ar: "المجموع الفرعي" },
 };
 
 export const FAQ_DATA = [

@@ -178,7 +178,19 @@ const CartDrawer: React.FC<{
   };
 
   const currencyLabel = t(region === 'EG' ? 'egp' : 'sar');
-  const total = items.reduce((acc, item) => acc + convertPrice(item.price) * item.quantity, 0);
+  
+  // Logic for Shipping
+  // Calculate base subtotal in EGP to check against threshold (500 EGP)
+  const subtotalBase = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  // Calculate displayed subtotal in selected region currency
+  const subtotal = items.reduce((acc, item) => acc + convertPrice(item.price) * item.quantity, 0);
+  
+  const SHIPPING_THRESHOLD_EGP = 500;
+  const BASE_SHIPPING_COST_EGP = 50;
+  
+  const isFreeShipping = subtotalBase >= SHIPPING_THRESHOLD_EGP;
+  const shippingCost = isFreeShipping ? 0 : convertPrice(BASE_SHIPPING_COST_EGP);
+  const total = subtotal + shippingCost;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -202,7 +214,9 @@ const CartDrawer: React.FC<{
 العنوان: ${formData.address}
     `.trim();
 
-    const summary = encodeURIComponent(`طلب جديد (${region}):\n\n${customerDetails}\n\n----------------\n\nالمنتجات:\n${itemStrings}\n\nالإجمالي: ${total} ${currencyLabel}`);
+    const shippingText = isFreeShipping ? t('free') : `${shippingCost} ${currencyLabel}`;
+    
+    const summary = encodeURIComponent(`طلب جديد (${region}):\n\n${customerDetails}\n\n----------------\n\nالمنتجات:\n${itemStrings}\n\nالمجموع الفرعي: ${subtotal} ${currencyLabel}\nالشحن: ${shippingText}\nالإجمالي: ${total} ${currencyLabel}`);
     window.open(`https://wa.me/201119241396?text=${summary}`, '_blank');
   };
 
@@ -318,9 +332,21 @@ const CartDrawer: React.FC<{
 
         {items.length > 0 && (
           <div className="p-8 border-t border-black/5 dark:border-white/5 space-y-6">
-            <div className="flex justify-between items-end">
-              <span className="text-gray-400 dark:text-white/40 font-black uppercase text-xs tracking-widest">{t('total')}</span>
-              <span className="text-4xl font-black italic text-black dark:text-white">{total} <span className="text-sm font-normal">{currencyLabel}</span></span>
+            <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400 dark:text-white/40 font-black uppercase text-xs tracking-widest">{t('subtotal')}</span>
+                  <span className="text-lg font-black italic text-black dark:text-white">{subtotal} {currencyLabel}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400 dark:text-white/40 font-black uppercase text-xs tracking-widest">{t('shipping')}</span>
+                  <span className={`text-lg font-black italic ${isFreeShipping ? 'text-brand-accent' : 'text-black dark:text-white'}`}>
+                    {isFreeShipping ? t('free') : `${shippingCost} ${currencyLabel}`}
+                  </span>
+                </div>
+                <div className="flex justify-between items-end pt-4 border-t border-black/5 dark:border-white/5">
+                  <span className="text-gray-400 dark:text-white/40 font-black uppercase text-xs tracking-widest">{t('total')}</span>
+                  <span className="text-4xl font-black italic text-black dark:text-white">{total} <span className="text-sm font-normal">{currencyLabel}</span></span>
+                </div>
             </div>
             
             {!isCheckout ? (
@@ -351,6 +377,7 @@ const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<'men' | 'women' | 'all' | 'accessories'>('all');
   const [policyModal, setPolicyModal] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
   
   // Ref for horizontal scrolling
   const offersScrollRef = useRef<HTMLDivElement>(null);
@@ -407,6 +434,20 @@ const App: React.FC = () => {
       const scrollAmount = current.clientWidth * 0.75;
       current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
     }
+  };
+
+  const handleSubscribe = () => {
+    if (!newsletterEmail) {
+        alert(t('fillAllFields'));
+        return;
+    }
+    const recipient = "alnmkym36@gmail.com";
+    const subject = lang === 'ar' ? "طلب اشتراك وخصم 10%" : "Subscription Request 10% OFF";
+    const body = lang === 'ar' 
+      ? `مرحباً،\n\nأرغب في الاشتراك في القائمة البريدية للحصول على كود الخصم.\n\nالبريد الإلكتروني: ${newsletterEmail}`
+      : `Hi,\n\nI would like to subscribe to the newsletter to get the discount code.\n\nEmail: ${newsletterEmail}`;
+    
+    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const filteredProducts = PRODUCTS.filter(p => activeCategory === 'all' || p.category === activeCategory);
@@ -682,8 +723,14 @@ const App: React.FC = () => {
                 <h2 className="hero-headline text-5xl lg:text-7xl text-black dark:text-white mb-8">{t('newsletterTitle')}</h2>
                 <p className="text-xl font-black uppercase italic tracking-tighter text-gray-500 dark:text-white/50 mb-12">{t('newsletterDesc')}</p>
                 <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-                  <input type="email" placeholder={t('emailPlaceholder')} className="flex-1 px-8 py-5 bg-gray-50 border-2 border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-2xl text-black dark:text-white font-black text-lg focus:outline-none focus:border-brand-accent uppercase italic" />
-                  <button className="px-12 py-5 bg-brand-accent text-white rounded-2xl font-black text-xl hover:scale-105 transition-all flex items-center justify-center gap-3">
+                  <input 
+                    type="email" 
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    placeholder={t('emailPlaceholder')} 
+                    className="flex-1 px-8 py-5 bg-gray-50 border-2 border-gray-200 dark:bg-white/5 dark:border-white/10 rounded-2xl text-black dark:text-white font-black text-lg focus:outline-none focus:border-brand-accent uppercase italic" 
+                  />
+                  <button onClick={handleSubscribe} className="px-12 py-5 bg-brand-accent text-white rounded-2xl font-black text-xl hover:scale-105 transition-all flex items-center justify-center gap-3">
                     {t('subscribe')} <Send className="w-5 h-5" />
                   </button>
                 </div>
