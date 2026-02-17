@@ -170,7 +170,7 @@ const CartDrawer: React.FC<{
 }> = ({ isOpen, onClose, items, onUpdate, onRemove }) => {
   const { lang, t, region } = useContext(LanguageContext);
   const [isCheckout, setIsCheckout] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', city: '', address: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', city: '', address: '', paymentMethod: 'cod' });
   
   const convertPrice = (price: number) => {
     if (region === 'EG') return price;
@@ -192,7 +192,7 @@ const CartDrawer: React.FC<{
   const shippingCost = isFreeShipping ? 0 : convertPrice(BASE_SHIPPING_COST_EGP);
   const total = subtotal + shippingCost;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -212,6 +212,7 @@ const CartDrawer: React.FC<{
 رقم الهاتف: ${formData.phone}
 المحافظة/المدينة: ${formData.city}
 العنوان: ${formData.address}
+طريقة الدفع: ${t(formData.paymentMethod)}
     `.trim();
 
     const shippingText = isFreeShipping ? t('free') : `${shippingCost} ${currencyLabel}`;
@@ -325,6 +326,22 @@ const CartDrawer: React.FC<{
                         rows={3}
                         className="w-full bg-gray-50 border-2 border-gray-100 dark:bg-white/5 dark:border-white/10 rounded-2xl px-5 py-4 font-bold text-black dark:text-white focus:outline-none focus:border-brand-accent transition-colors resize-none"
                     />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-white/50 ps-2">{t('paymentMethodLabel')}</label>
+                    <div className="relative">
+                        <select 
+                            name="paymentMethod" 
+                            value={formData.paymentMethod} 
+                            onChange={handleInputChange} 
+                            className="w-full bg-gray-50 border-2 border-gray-100 dark:bg-white/5 dark:border-white/10 rounded-2xl px-5 py-4 font-bold text-black dark:text-white focus:outline-none focus:border-brand-accent transition-colors appearance-none cursor-pointer"
+                        >
+                            <option value="cod">{t('cod')}</option>
+                            <option value="instapay">{t('instapay')}</option>
+                            <option value="creditCard">{t('creditCard')}</option>
+                        </select>
+                        <ChevronDown className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none text-gray-400 ${lang === 'ar' ? 'left-4' : 'right-4'}`} />
+                    </div>
                 </div>
              </div>
           )}
@@ -665,54 +682,44 @@ const App: React.FC = () => {
           {/* Size Guide Section */}
           <section id="size-guide" className="py-24 container mx-auto px-8">
             <div className="text-center mb-16">
-              <h2 className="hero-headline text-5xl lg:text-7xl text-black dark:text-white mb-4">{t('sizeGuide')}</h2>
-              <p className="text-gray-500 dark:text-white/60 font-black uppercase tracking-widest">{t('findYourFit')}</p>
+              <h2 className="hero-headline text-5xl lg:text-7xl text-black dark:text-white mb-6">{t('sizeGuide')} 📏</h2>
+              <p className="text-xl font-bold text-gray-500 dark:text-white/60 whitespace-pre-line leading-relaxed max-w-2xl mx-auto">{t('sizeGuideSubtitle')}</p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Men's Table */}
-              <div className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[2.5rem] p-10">
-                  <h3 className="text-3xl font-black italic uppercase mb-8 text-black dark:text-white text-center">{t('menSizes')}</h3>
-                  <div className="overflow-x-auto">
-                      <table className="w-full text-center">
-                          <thead>
-                              <tr className="border-b-2 border-black/5 dark:border-white/10">
-                                  <th className="py-4 font-black uppercase text-brand-accent">{t('size')}</th>
-                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('chest')} (cm)</th>
-                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('length')} (cm)</th>
-                              </tr>
-                          </thead>
-                          <tbody className="font-bold text-black dark:text-white">
-                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">S</td><td className="py-4">91-96</td><td className="py-4">70</td></tr>
-                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">M</td><td className="py-4">96-101</td><td className="py-4">72</td></tr>
-                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">L</td><td className="py-4">101-106</td><td className="py-4">74</td></tr>
-                              <tr><td className="py-4">XL</td><td className="py-4">106-111</td><td className="py-4">76</td></tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-              {/* Women's Table */}
-              <div className="bg-white border border-black/5 shadow-sm dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[2.5rem] p-10">
-                  <h3 className="text-3xl font-black italic uppercase mb-8 text-black dark:text-white text-center">{t('womenSizes')}</h3>
-                  <div className="overflow-x-auto">
-                      <table className="w-full text-center">
-                          <thead>
-                              <tr className="border-b-2 border-black/5 dark:border-white/10">
-                                  <th className="py-4 font-black uppercase text-brand-accent">{t('size')}</th>
-                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('chest')} (cm)</th>
-                                  <th className="py-4 font-black uppercase text-gray-500 dark:text-white/60">{t('waist')} (cm)</th>
-                              </tr>
-                          </thead>
-                          <tbody className="font-bold text-black dark:text-white">
-                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">XS</td><td className="py-4">76-81</td><td className="py-4">60-64</td></tr>
-                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">S</td><td className="py-4">81-86</td><td className="py-4">64-69</td></tr>
-                              <tr className="border-b border-black/5 dark:border-white/5"><td className="py-4">M</td><td className="py-4">86-91</td><td className="py-4">69-74</td></tr>
-                              <tr><td className="py-4">L</td><td className="py-4">91-96</td><td className="py-4">74-79</td></tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
+            <div className="max-w-5xl mx-auto">
+                <div className="bg-white border border-black/5 shadow-xl dark:bg-white/5 dark:border-white/5 dark:glass-card rounded-[3rem] p-8 lg:p-12 overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-center">
+                            <thead>
+                                <tr className="border-b-4 border-black/5 dark:border-white/10">
+                                    <th className="py-6 font-black uppercase text-brand-accent text-2xl">{t('size')}</th>
+                                    <th className="py-6 font-black uppercase text-black dark:text-white text-xl">{t('chest')} (cm)</th>
+                                    <th className="py-6 font-black uppercase text-black dark:text-white text-xl">{t('length')} (cm)</th>
+                                    <th className="py-6 font-black uppercase text-black dark:text-white text-xl">{t('weight')} (kg)</th>
+                                </tr>
+                            </thead>
+                            <tbody className="font-bold text-lg text-gray-600 dark:text-white/80">
+                                {[
+                                    { s: 'S', c: '90-95', h: '165-170', w: '50-60' },
+                                    { s: 'M', c: '96-101', h: '171-175', w: '61-70' },
+                                    { s: 'L', c: '102-107', h: '176-180', w: '71-80' },
+                                    { s: 'XL', c: '108-113', h: '181-185', w: '81-90' },
+                                    { s: 'XXL', c: '114-119', h: '186-190', w: '91-100' },
+                                ].map((row, i) => (
+                                    <tr key={i} className="border-b border-black/5 dark:border-white/5 last:border-0 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                        <td className="py-6 font-black text-black dark:text-white">{row.s}</td>
+                                        <td className="py-6" dir="ltr">{row.c}</td>
+                                        <td className="py-6" dir="ltr">{row.h}</td>
+                                        <td className="py-6" dir="ltr">{row.w}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="mt-8 p-6 bg-brand-accent/5 rounded-2xl border border-brand-accent/10 text-center">
+                        <p className="text-brand-accent font-black text-lg">{t('sizeTip')}</p>
+                    </div>
+                </div>
             </div>
           </section>
 

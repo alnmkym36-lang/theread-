@@ -185,7 +185,7 @@ export const TRANSLATIONS: TranslationDictionary = {
   hoursVal: { en: "Everyday: 10 AM - 10 PM (GMT+2)", ar: "يومياً: 10 ص - 10 م" },
   location: { en: "Locations", ar: "المواقع" },
   locationVal: { en: "Cairo, Egypt | Riyadh, KSA", ar: "القاهرة، مصر | الرياض، السعودية" },
-  whyUs: { en: "Why Thread?", ar: "لماذا ثريد؟" },
+  whyUs: { en: "Why Thread?", ar: "لماذا THREAD؟" },
   premiumQuality: { en: "Premium Quality", ar: "جودة ممتازة" },
   premiumQualityDesc: { en: "High-grade Egyptian fabrics tailored for durability.", ar: "أقمشة مصرية عالية الجودة مصممة لتدوم طويلاً." },
   uniqueDesign: { en: "Unique Design", ar: "تصميم فريد" },
@@ -201,7 +201,7 @@ export const TRANSLATIONS: TranslationDictionary = {
   explore: { en: "EXPLORE", ar: "اكتشف" },
   support: { en: "SUPPORT", ar: "الدعم" },
   contact: { en: "CONTACT", ar: "تواصل معنا" },
-  copyrightStore: { en: "© 2024 THREAD EXCLUSIVE STORE.", ar: "© 2024 متجر ثريد الحصري." },
+  copyrightStore: { en: "© 2024 THREAD EXCLUSIVE STORE.", ar: "© 2024 متجر THREAD الحصري." },
   sizeGuide: { en: "Size Guide", ar: "دليل المقاسات" },
   
   // --- Size Guide Section Keys ---
@@ -209,9 +209,12 @@ export const TRANSLATIONS: TranslationDictionary = {
   size: { en: "Size", ar: "المقاس" },
   chest: { en: "Chest", ar: "الصدر" },
   length: { en: "Length", ar: "الطول" },
+  weight: { en: "Weight", ar: "الوزن" },
   waist: { en: "Waist", ar: "الوسط" },
   menSizes: { en: "Men's Sizes", ar: "مقاسات الرجال" },
   womenSizes: { en: "Women's Sizes", ar: "مقاسات النساء" },
+  sizeGuideSubtitle: { en: "Not sure about the size? Check this table or contact customer service", ar: "مش متأكد من المقاس؟ شوف الجدول ده أو كلم خدمة العملاء" },
+  sizeTip: { en: "💡 Tip: If you are between sizes, choose the larger one", ar: "💡 تلميح: لو بين مقاسين، اختار الأكبر" },
 
   // --- Checkout Form Keys ---
   checkoutForm: { en: "Checkout", ar: "إتمام الطلب" },
@@ -227,6 +230,12 @@ export const TRANSLATIONS: TranslationDictionary = {
   shipping: { en: "Shipping", ar: "الشحن" },
   free: { en: "Free", ar: "مجاني" },
   subtotal: { en: "Subtotal", ar: "المجموع الفرعي" },
+  
+  // --- Payment Methods ---
+  paymentMethodLabel: { en: "Payment Method", ar: "طريقة الدفع" },
+  cod: { en: "Cash on Delivery", ar: "دفع عند الاستلام" },
+  instapay: { en: "InstaPay / E-Wallet", ar: "إنستا باي / محفظة" },
+  creditCard: { en: "Credit Card", ar: "بطاقة بنكية" },
 };
 
 export const FAQ_DATA = [
