@@ -71,7 +71,13 @@ const ThemeContext = createContext<{
 const Modal: React.FC<{ isOpen: boolean; onClose: () => void; title: string; children: React.ReactNode }> = ({ isOpen, onClose, title, children }) => {
   const { lang, t } = useContext(LanguageContext);
   if (!isOpen) return null;
-  return (
+  return (<div style={{ padding: 12, border: "1px solid #444", borderRadius: 12, marginBottom: 16 }}>
+  <h3 style={{ margin: 0 }}>Supabase Products Test</h3>
+  {errorMsg && <p style={{ color: "red" }}>Error: {errorMsg}</p>}
+  <pre style={{ whiteSpace: "pre-wrap", fontSize: 12 }}>
+    {JSON.stringify(products, null, 2)}
+  </pre>
+</div>
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 dark:bg-black/95 backdrop-blur-md" onClick={onClose} />
       <div className="relative bg-white dark:bg-brand-dark dark:glass-card w-full max-w-lg rounded-[3rem] p-10 animate-in zoom-in-95 duration-300 border border-black/5 dark:border-white/5 shadow-2xl">
@@ -385,7 +391,8 @@ const CartDrawer: React.FC<{
 
 // --- Main App ---
 
-const App: React.FC = () => {
+const App: React.FC = () => {import { useEffect, useState } from "react";
+import { supabase } from "./supabase";
   const [lang, setLang] = useState<Language>(() => (localStorage.getItem('lang') as Language) || 'ar');
   const [region, setRegion] = useState<Region>(() => (localStorage.getItem('region') as Region) || 'EG');
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem('theme') as Theme) || 'dark');
@@ -416,9 +423,21 @@ const App: React.FC = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const [products, setProducts] = useState<any[]>([]);
+const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+useEffect(() => {
+  (async () => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .limit(10);
+
+    if (error) setErrorMsg(error.message);
+    else setProducts(data ?? []);
+  })();
+}, []);
+    return ();
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   const t = (key: string) => TRANSLATIONS[key]?.[lang] || key;
 
