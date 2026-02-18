@@ -1,6 +1,7 @@
-
+import { supabase } from "./supabase";
+import { useEffect, useState } from "react";
 import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
-import { 
+import {
   ShoppingBag, 
   Menu, 
   X, 
